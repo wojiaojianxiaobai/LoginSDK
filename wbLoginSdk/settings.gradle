@@ -1,0 +1,2 @@
+include ':testmode'
+include ':wbsdk'
