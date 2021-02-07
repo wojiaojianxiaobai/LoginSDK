@@ -26,14 +26,19 @@ class WbLoginDialog :Dialog{
             val layout = inflater.inflate(R.layout.wb_login_activity,null)
             dialog.addContentView(layout,ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT))
             layout.findViewById<View>(R.id.login_enter_btn).setOnClickListener(View.OnClickListener {
+                val userAccount:String = layout.findViewById<EditText>(R.id.login_username).text.toString()
+                val userPassword:String = layout.findViewById<EditText>(R.id.login_password).text.toString()
+
                 val userData = UserData()
-                userData.uid = layout.findViewById<EditText>(R.id.login_username).text.toString()
+                userData.uid = userAccount
                 userData.userName = "测试用户"
                 WbLogUtil.v("登录成功: uid: " + userData.uid)
                 wbLoginCallback.onSuccess(userData)
+                dialog.dismiss()
             })
             layout.findViewById<View>(R.id.login_cancel_btn).setOnClickListener(View.OnClickListener {
                 WbLogUtil.v("取消登录")
+                dialog.dismiss()
             })
             dialog.show()
         }

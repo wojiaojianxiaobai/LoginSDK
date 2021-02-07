@@ -6,6 +6,8 @@ import com.wb.wblogin.api.WbBaseCallback
 import com.wb.wblogin.api.WbLoginCallback
 import com.wb.wblogin.dao.WbLogUtil
 import com.wb.wblogin.dao.WbSdk
+import com.wb.wblogin.dialog.WbFloatDialog
+import com.wb.wblogin.dialog.WbLoginDialog
 import com.wb.wblogin.entity.UserData
 import com.wb.wblogin.entity.WbError
 
@@ -28,6 +30,8 @@ class WbTestMainActivity : AppCompatActivity() {
 
                     override fun onSuccess(t: UserData) {
                         WbLogUtil.v("登录成功" + t.uid + t.userName)
+                        WbFloatDialog.showUserFloatDialog(this@WbTestMainActivity)
+
                     }
 
                 })
