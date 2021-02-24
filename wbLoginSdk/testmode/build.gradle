@@ -50,12 +50,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     compileOnly project(':wbsdk')
-    def libsFolder = new File(projectDir, 'libs')
-    for (aarFile in libsFolder.listFiles()) {
-        def fileName = aarFile.getName()
-        if (fileName.endsWith(".aar")) {
-            fileName = fileName.replaceAll(".aar", "")
-            implementation name: "${fileName}", ext: 'aar'
-        }
-    }
+//    def libsFolder = new File(projectDir, 'libs')
+//    for (aarFile in libsFolder.listFiles()) {
+//        def fileName = aarFile.getName()
+//        if (fileName.endsWith(".aar")) {
+//            fileName = fileName.replaceAll(".aar", "")
+//            implementation name: "${fileName}", ext: 'aar'
+//        }
+//    }
+
+
+    //谷歌play
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

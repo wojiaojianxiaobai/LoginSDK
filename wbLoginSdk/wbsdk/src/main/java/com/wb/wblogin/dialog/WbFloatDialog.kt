@@ -1,16 +1,20 @@
 package com.wb.wblogin.dialog
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.ImageFormat
 import android.graphics.PixelFormat
 import android.util.AttributeSet
 import android.view.*
 import android.widget.LinearLayout
+import android.widget.Switch
 import com.wb.wblogin.R
 import com.wb.wblogin.dao.WbLogUtil
 import java.util.jar.Attributes
 import java.util.zip.Inflater
 
+@SuppressLint("StaticFieldLeak")
 object WbFloatDialog {
     private var context: Context? = null
     var windowInfo: WindowInfo? = null
@@ -82,37 +86,73 @@ object WbFloatDialog {
 
     private var lastX: Int = 0
     private var lastY: Int = 0
-
+    private var touchDownX:Int = 0
+    private var touchDownY:Int = 0
     object onUserCenterTouchListener : View.OnTouchListener {
         override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-            WbLogUtil.v("fire on float dialog touch")
-            var currentX = p1?.rawX?.toInt()
-            var currentY = p1?.rawY?.toInt()
-            if (currentX == null || currentY == null) {
+            if (p1 == null){
                 return true
             }
-            if (lastX == 0) {
-                lastX = currentX
+
+            var currentX = p1.rawX.toInt()
+            var currentY = p1.rawY.toInt()
+
+            when(p1.action){
+                MotionEvent.ACTION_DOWN -> {
+                    lastX = currentX
+                    lastY = currentY
+                    touchDownX = currentX
+                    touchDownY = currentY
+                    WbLogUtil.v("touch down: $touchDownX - $touchDownY")
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    var dx = currentX.minus(lastX)
+                    var dy = currentY.minus(lastY)
+
+                    windowInfo?.layoutParams!!.x += dx
+                    lastX = currentX
+
+                    windowInfo?.layoutParams!!.y += dy
+                    lastY = currentY
+
+                    var windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+                    windowManager.updateViewLayout(windowInfo?.view, windowInfo?.layoutParams)
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    WbLogUtil.v("" + Math.abs(currentX - touchDownX) + " - " +(Math.abs(currentY - touchDownY) ) )
+                    WbLogUtil.v("touchDownX$touchDownX - currentX$currentX")
+                    if ((Math.abs(currentX - touchDownX) < 5 ) && (Math.abs(currentY - touchDownY) < 5)){
+                        fireOnClickEvent()
+                    }
+                }
             }
-
-            if (lastY == 0) {
-                lastY = currentY
-            }
-
-            var dx = currentX.minus(lastX)
-            var dy = currentY.minus(lastY)
-
-            windowInfo?.layoutParams!!.x += dx
-            lastX = currentX
-
-            windowInfo?.layoutParams!!.y += dy
-            lastY = currentY
-
-            var windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-            windowManager.updateViewLayout(windowInfo?.view, windowInfo?.layoutParams)
             return true
         }
+    }
+    var floatWindowIsShow: Boolean = false
+
+    private fun fireOnClickEvent() {
+        WbLogUtil.v("触发悬浮窗点击事件")
+        showFloatWindow()
+
+//        if (floatWindowIsShow){
+//            hideFloatWindow()
+//        }else{
+//            showFloatWindow()
+//        }
+    }
+
+    private fun showFloatWindow(){
+        floatWindowIsShow = true
+        UserCenterFloatDialog.getInstance(context!!).show()
+    }
+
+    private fun hideFloatWindow(){
+        floatWindowIsShow = false
+        UserCenterFloatDialog.getInstance(context!!).dismiss()
     }
 
 
