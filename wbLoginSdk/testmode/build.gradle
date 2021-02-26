@@ -49,15 +49,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    compileOnly project(':wbsdk')
-//    def libsFolder = new File(projectDir, 'libs')
-//    for (aarFile in libsFolder.listFiles()) {
-//        def fileName = aarFile.getName()
-//        if (fileName.endsWith(".aar")) {
-//            fileName = fileName.replaceAll(".aar", "")
-//            implementation name: "${fileName}", ext: 'aar'
-//        }
-//    }
+//    compileOnly project(':wbsdk')
+    def libsFolder = new File(projectDir, 'libs')
+    for (aarFile in libsFolder.listFiles()) {
+        def fileName = aarFile.getName()
+        if (fileName.endsWith(".aar")) {
+            fileName = fileName.replaceAll(".aar", "")
+            implementation name: "${fileName}", ext: 'aar'
+        }
+    }
 
 
     //谷歌play

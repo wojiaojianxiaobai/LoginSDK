@@ -3,6 +3,9 @@
     package="com.wb.wblogin">
 
     <application>
-
+        <meta-data android:name="platform"
+            android:value=""/>
+        <meta-data android:name="login_platform"
+            android:value=""/>
     </application>
 </manifest>

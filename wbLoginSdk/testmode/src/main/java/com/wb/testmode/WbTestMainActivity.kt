@@ -44,7 +44,7 @@ class WbTestMainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
-            WbSdk.GameSDK.getInStance().onActivityResult(requestCode, resultCode, data)
+            WbSdk.GameSDK.getInStance().onActivityResult(this,requestCode, resultCode, data)
         }
     }
 }
