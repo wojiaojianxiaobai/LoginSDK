@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wb.wblogin">
+
+    <application>
+        <meta-data android:name="platform"
+            android:value=""/>
+        <meta-data android:name="login_platform"
+            android:value=""/>
+    </application>
 </manifest>

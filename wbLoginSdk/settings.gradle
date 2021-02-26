@@ -1,2 +1,3 @@
+include ':google'
 include ':testmode'
 include ':wbsdk'

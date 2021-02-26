@@ -1,6 +1,7 @@
 package com.wb.wblogin.dao
 
 import com.wb.wblogin.Util.Klog.KLog
+import com.wb.wblogin.config.WbAppConfig
 
 object WbLogUtil {
     fun init(boolean: Boolean) {
@@ -8,12 +9,12 @@ object WbLogUtil {
     }
 
     fun v(content: String) {
-        KLog.v("WbSDK", content)
+        KLog.v(WbAppConfig.SDK_NAME, content)
     }
 
     fun v(tag: String, content: String) {
         if (tag.isEmpty()) {
-            KLog.v("WbSDK", content)
+            KLog.v(WbAppConfig.SDK_NAME, content)
         } else {
             KLog.v(tag, content)
         }
