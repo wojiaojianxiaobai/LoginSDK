@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.wb.wblogin.api.WbBaseCallback;
 import com.wb.wblogin.api.WbLoginCallback;
+import com.wb.wblogin.api.WbLogoutCallback;
 import com.wb.wblogin.api.WbSdkApi;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,17 +46,6 @@ public class GooglePlaySdk implements WbSdkApi {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @NotNull Intent data) {
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
     // [START handleSignInResult]
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
@@ -75,10 +65,6 @@ public class GooglePlaySdk implements WbSdkApi {
 
     // [END handleSignInResult]
 
-    @Override
-    public void logout(@NotNull Activity activity) {
-        signOut(activity);
-    }
 
     // [START signOut]
     private void signOut(Activity activity) {
@@ -126,22 +112,38 @@ public class GooglePlaySdk implements WbSdkApi {
     }
 
     @Override
-    public void sendRoleCreateData() {
+    public void onActivityResult(@NotNull Activity activity, int requestCode, int resultCode, @NotNull Intent data) {
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    @Override
+    public void logout(@NotNull Activity activity, @NotNull WbLogoutCallback logoutCallback) {
+        signOut(activity);
+    }
+
+    @Override
+    public void sendRoleCreateData(@NotNull Activity activity) {
 
     }
 
     @Override
-    public void sendRoleLoginData() {
+    public void sendRoleLoginData(@NotNull Activity activity) {
 
     }
 
     @Override
-    public void sendRoleLevelData() {
+    public void sendRoleLevelData(@NotNull Activity activity) {
 
     }
 
     @Override
-    public void sendRoleExitData() {
+    public void sendRoleExitData(@NotNull Activity activity) {
 
     }
 }
